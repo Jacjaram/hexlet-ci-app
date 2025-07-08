@@ -29,7 +29,6 @@
 #         run: make test
 
 # AÑADIR CODIGO PARA VALIDACION EN SNYK
-
 name: Node.js CI
 
 on:
@@ -50,7 +49,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'  # ✅ Habilita la caché de npm
+          cache: 'npm'
 
       - name: Install dependencies
         run: make setup
@@ -62,9 +61,8 @@ jobs:
         run: make test
 
       - name: Snyk vulnerability scan
-        uses: snyk/actions/node@v1
+        uses: snyk/actions/node@main
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: test
-

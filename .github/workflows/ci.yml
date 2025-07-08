@@ -1,3 +1,35 @@
+# name: Node.js CI
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Use Node.js 18
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install dependencies
+#         run: make setup
+
+#       - name: Run linter
+#         run: make lint
+
+#       - name: Run tests
+#         run: make test
+
+# AÑADIR CODIGO PARA VALIDACION EN SNYK
+
 name: Node.js CI
 
 on:
@@ -18,6 +50,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'  # ✅ Habilita la caché de npm
 
       - name: Install dependencies
         run: make setup
@@ -27,3 +60,10 @@ jobs:
 
       - name: Run tests
         run: make test
+
+      - name: Snyk vulnerability scan
+        uses: snyk/actions/node@0.6.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test

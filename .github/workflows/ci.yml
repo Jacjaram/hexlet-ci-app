@@ -60,9 +60,11 @@ jobs:
       - name: Run tests
         run: make test
 
-      - name: Snyk vulnerability scan
-        uses: snyk/actions/node@main
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Run Snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: test
+        run: snyk test
+

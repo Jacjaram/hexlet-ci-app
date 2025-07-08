@@ -62,8 +62,9 @@ jobs:
         run: make test
 
       - name: Snyk vulnerability scan
-        uses: snyk/actions/node@0.6.0
+        uses: snyk/actions/node@v1
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: test
+
